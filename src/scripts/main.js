@@ -24,11 +24,6 @@ const getInputValue = ()=> {
 search.addEventListener("click", getInputValue)
 
 
-//initializing empty arrays
-trackArray=[]
-lyricsArray=[]
-
-
 //***************************************************************************************************** 
 // a helper function that iterates through the json response and return the relavant items as an array
 //***************************************************************************************************** 
@@ -52,9 +47,9 @@ if (trackOrLyricsJSON==="tracks"){   // we`re processing a response from the "tr
   console.log(tracksArray)
   domPrinter (tracksArray)
 }else{ // we`re processing a response from the "lyrics" endpoint
-  lyricsArray.push(jsonfiedResponse.body.lyrics.lyrics_body)
+  lyricsArray.push(jsonfiedResponse.message.body.lyrics.lyrics_body)
   console.log(lyricsArray)
-  return lyricsArray
+  domPrinter (lyricsArray)
 }}
 
 //***************************************************************************************************** 
@@ -63,8 +58,11 @@ if (trackOrLyricsJSON==="tracks"){   // we`re processing a response from the "tr
 let card_counter=0;
 
 domPrinter=(arrayOfSomeKind)=>{
-
+console.log(arrayOfSomeKind.hasOwnProperty("tracks"))
 card_counter++
+
+if (arrayOfSomeKind.hasOwnProperty("tracks")){  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
+console.log("Tracks Array")
 
 //Creating the DOM elements
 songsResultsContainer = document.querySelector("#songsContainer")
@@ -87,6 +85,7 @@ songCardBody.classList.add("card bg-light")
 songCardBody.style.add("width: 18rem;")
 songCardBody.classList.add("btn btn-primary")
 songsCardBodyButton.id= `get-lyrics-${card_counter}`
+songsCardBodyButton.addEventListener('click',console.log("BUTTON CLICKED"))   // <--------- Dylan, add your fetchLyrics call here
 
 // Appending all the child elements to their parent containers
 songsCardBody.appendChild(songsCardBodySongTitle)
@@ -96,10 +95,7 @@ songCardHeader.appendChild(songCardHeaderArtist)
 
 songsCardContainer.appendChild(songCardHeader)
 songsCardContainer.appendChild(songCardBody)
-
-  for (let i=0; i<jsonfiedResponse.message.body.track_list.length; i++){
-    trackArray.push(jsonfiedResponse.message.body.track_list[i].track.track_id)
-  }  
-  console.log(trackArray)
-  return trackArray
+}else {
+  console.log("Lyrics Array")
+}
 }
