@@ -5,13 +5,19 @@ APIManager = {
     getArtist(textValue) {
 return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=4cc92c98b858367876ca9869d3895f76`)
 .then(res => res.json())
-//.then(res =>console.log(res))
 .then(res2 => jsonIterator(res2, "tracks"))
-}
+},
+    getLyrics(trackId) {
+    return fetchJsonp (`${url}/track.get?format=jsonp&track_id=${trackId}&apikey=4cc92c98b858367876ca9869d3895f76`)
+    .then(res => res.json())
+    .then(res2 => console.log(res2))
+    }
+     
 }
 
-//.then(res => jsonIterator(jsonfiedResponse))
-//.then(res => jsonIterator(jsonfiedResponse))
+//***************************************************************************************************** 
+// Event Listener for Search Button 
+//***************************************************************************************************** 
 let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
@@ -23,6 +29,7 @@ const getInputValue = ()=> {
 
 search.addEventListener("click", getInputValue)
 
+APIManager.getLyrics(8515472)
 
 //initializing empty arrays
 trackArray=[]
