@@ -1,0 +1,34 @@
+.wrapper {
+  display: flex;
+  flex-flow: row wrap;
+  font-weight: bold;
+}
+
+.wrapper > * {
+  padding: 10px;
+  flex: 1 100%;
+}
+
+
+main {
+  background: deepskyblue;
+  display: flex;
+  justify-content: space-evenly;
+  flex: 1 100%;
+
+}
+
+.card {
+  margin-top: .5em;
+}
+
+section {
+  text-align: left;
+  /* width: 100%; */
+
+}
+
+
+body {
+  padding: 2em;
+}
