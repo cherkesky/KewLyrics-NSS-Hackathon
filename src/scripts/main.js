@@ -5,11 +5,29 @@ APIManager = {
     getArtist(textValue) {
 return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=${apiKey}`)
 .then(res => res.json())
-.then (resjson=> jsonIterator(resjson, "tracks"))
+//.then(res =>console.log(res))
+.then(res2 => jsonIterator(res2, "tracks"))
 }
 }
 
-APIManager.getArtist("don't stop")
+//.then(res => jsonIterator(jsonfiedResponse))
+//.then(res => jsonIterator(jsonfiedResponse))
+let search = document.getElementById("btnSearch");
+let inputValue = document.getElementById("lyricSearch").value;
+
+const getInputValue = ()=> {
+    let inputValue = document.getElementById("lyricSearch").value;
+      APIManager.getArtist(inputValue);
+
+   };
+
+search.addEventListener("click", getInputValue)
+
+
+//initializing empty arrays
+trackArray=[]
+lyricsArray=[]
+
 
 //***************************************************************************************************** 
 // a helper function that iterates through the json response and return the relavant items as an array
@@ -79,7 +97,9 @@ songCardHeader.appendChild(songCardHeaderArtist)
 songsCardContainer.appendChild(songCardHeader)
 songsCardContainer.appendChild(songCardBody)
 
-
-
-
+  for (let i=0; i<jsonfiedResponse.message.body.track_list.length; i++){
+    trackArray.push(jsonfiedResponse.message.body.track_list[i].track.track_id)
+  }  
+  console.log(trackArray)
+  return trackArray
 }
