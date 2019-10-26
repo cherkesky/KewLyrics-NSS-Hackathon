@@ -1,5 +1,17 @@
-console.log("KewLyrics");
+const url = "https://api.musixmatch.com/ws/1.1"
 
+
+APIManager = {
+    getArtist(textValue) {
+return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=4cc92c98b858367876ca9869d3895f76`)
+.then(res => res.json())
+.then(res =>console.log(res))
+}
+}
+
+//.then(res => jsonIterator(jsonfiedResponse))
+
+APIManager.getArtist("don't stop")
 //initializing empty arrays
 trackArray=[]
 lyricsArray=[]
