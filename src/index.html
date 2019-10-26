@@ -5,11 +5,126 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>KewLyrics</title>
-  <link rel="stylesheet" href="/styles/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles/bootstrap.min.css""
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-  
-<h1>KewLyrics</h1>
+
+<div class="wrapper bg-secondary">
+  <header class="header bg-primary">
+    <h2>KewLyrics</h2>
+    <div class="searchbox">
+      <label for="lyricsSeach">Search for Lyrics</label><input type="text" id="lyricSearch" class="form-control">
+      <button id="btnSearch" type="button" class="btn btn-primary">Search</button>
+    </div>
+  </header>
+  <main class="bg-primary">
+
+    <section id="songsContainer" >
+      <h3>Search Results:</h3>
+      <!-- use one of these for each card-->
+      <div class="card bg-light" style="width: 18rem;">
+          <div class="card-header"><h3>Song Title</h3></div>
+          <div class="card-body">
+            <p class="card-text">Additional info related to this song. lasdjf aslfj ljksdf ljlksdf lkjsdf</p>
+            <a class="btn btn-primary" id="btnGetDetails">Show Details</a>
+          </div>
+      </div>
+      <!-- use one of these for each card-->
+      <div class="card bg-light" style="width: 18rem;">
+        <div class="card-header">
+          <h3>Song Title</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Additional info related to this song. lasdjf aslfj ljksdf ljlksdf lkjsdf</p>
+          <a class="btn btn-primary" id="btnGetDetails">Show Details</a>
+        </div>
+      </div>
+      <!-- use one of these for each card-->
+      <div class="card bg-light" style="width: 18rem;">
+        <div class="card-header">
+          <h3>Song Title</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Additional info related to this song. lasdjf aslfj ljksdf ljlksdf lkjsdf</p>
+          <a class="btn btn-primary" id="btnGetDetails">Show Details</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="lyricsContainer">
+      <h3>Details:</h3>
+      <!-- use one of these for each detail card-->
+      <div class="card bg-light" style="width: 18rem;">
+        <div class="card-header">
+          <h3>Song Detail:</h3>
+        </div>
+        <div class="card-body">
+          <p class="card-text">
+          <pre>
+To see design more clearly, sprinkle tormented
+
+gibberish across the page, flouring a counter top
+
+so dough can be flattened without sticking.
+
+Lorem ipsum dolor sit amet, consectetur,
+
+adipisci velit. The letters are a page. To a reader,
+
+they signify Your name here, a story about the work
+
+you do, about all you have accomplished.
+
+In these pretty words, breath and boundary.
+
+Lorem ipsum dolor sit amet. Blah blah
+
+blah reverberating. It is sweet and becoming
+
+to erect paragraphs, cardboard cut-outs standing
+
+in for architecture. Don’t lean on that column,
+
+or look too closely at this text. It is only here
+
+to protect us from silence, to invoke the pretense
+
+of grace, greeked. What can fill this lonely room?
+
+Lorem ipsum dolor sit amet, consectetur, adipisci velit,
+
+nonsense, scissored Cicero loosely translated as
+
+There is no one who loves pain itself, who seeks
+
+after it and wants to have it, simply because it is pain.
+
+A most versatile text. Embroider it on dust ruffles,
+
+print it on potpourri. Spell it out in refrigerator magnets
+
+and on exposed beams. Use its invocation to decorate.
+
+Design something for your reader, and in the meantime,
+
+let them see the exquisite potential of your project.
+
+Murmur it into their cheek, the spine of a book,
+
+a page: lorem ipsum, this is what we build with.
+</pre>
+          </p>
+        </div>
+      </div>
+    </section>
+
+
+  </main>
+</div>
 
   <script src="/api/apikeys.js"></script>
   <script src="./scripts/main.js"></script>
