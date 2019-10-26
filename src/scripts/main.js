@@ -2,16 +2,22 @@ const url = "https://api.musixmatch.com/ws/1.1"
 
 
 APIManager = {
-    getArtist(textValue) {
-return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=${apiKey}`)
+    getArtist(textValue) { // getArtist API call
+return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=4cc92c98b858367876ca9869d3895f76`)
 .then(res => res.json())
-//.then(res =>console.log(res))
 .then(res2 => jsonIterator(res2, "tracks"))
-}
+},
+    getLyrics(trackId) {  // getLyrics API call
+    return fetchJsonp (`${url}/track.lyrics.get?format=jsonp&track_id=${trackId}&apikey=4cc92c98b858367876ca9869d3895f76`)
+    .then(res => res.json())
+    .then(res2 => console.log(res2))
+    }
+
 }
 
-//.then(res => jsonIterator(jsonfiedResponse))
-//.then(res => jsonIterator(jsonfiedResponse))
+//*****************************************************************************************************
+// Event Listener for Search Button 
+//*****************************************************************************************************
 let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
@@ -43,7 +49,7 @@ if (trackOrLyricsJSON==="tracks"){   // we`re processing a response from the "tr
       song: jsonfiedResponse.message.body.track_list[i].track.track_name
     }
     tracksArray.push(tracksObject)
-  }  
+  }
   console.log(tracksArray)
   domPrinter (tracksArray)
 }else{ // we`re processing a response from the "lyrics" endpoint
@@ -57,44 +63,56 @@ if (trackOrLyricsJSON==="tracks"){   // we`re processing a response from the "tr
 //***************************************************************************************************** 
 let card_counter=0;
 
-domPrinter=(arrayOfSomeKind)=>{
-console.log(arrayOfSomeKind.hasOwnProperty("tracks"))
-card_counter++
+domPrinter=(lyricsOrTracksArray)=>{
+console.log(lyricsOrTracksArray.length)
 
-if (arrayOfSomeKind.hasOwnProperty("tracks")){  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
+if (lyricsOrTracksArray.length === 10){  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
 console.log("Tracks Array")
 
-//Creating the DOM elements
-songsResultsContainer = document.querySelector("#songsContainer")
-songsCardContainer= document.createElement("div") 
+for (let i=0; i<lyricsOrTracksArray.length; i++){
+  card_counter++
 
-songCardHeader = document.createElement("div")   
-songCardHeaderArtist = document.createElement("h3") 
+  const fetchLyricsByTrack = lyricsOrTracksArray[i].track
+  const byTrackArtist = lyricsOrTracksArray[i].artist
+  const byTrackSong = lyricsOrTracksArray[i].song
 
-songsCardBody = document.createElement("div")    
-songsCardBodySongTitle = document.createElement("p")
-songsCardBodyButton = document.createElement("a")
+  //Creating the DOM elements
+  let songsResultsContainer = document.querySelector("#songsContainer")
+  let songsCardContainer= document.createElement("div") 
+  
+  let songsCardHeader = document.createElement("div")   
+  let songsCardHeaderArtist = document.createElement("h3") 
+  
+  let songsCardBody = document.createElement("div")    
+  let songsCardBodySongTitle = document.createElement("p")
+  let songsCardBodyButton = document.createElement("a")
+  
+  // Adding content to the elements
+  songsCardHeaderArtist.textContent = `Artist: ${byTrackArtist}`
+  songsCardBodySongTitle.textContent= `Song: ${byTrackSong}`
+  songsCardBodyButton.textContent= "Get Lyrics"
+  
+  // Adding styling and classes to the elements
+  songsCardBody.classList.add("card")
+  songsCardBody.classList.add("bg-light")
+  songsCardBody.style.cssText = `width: 18rem;`
+  songsCardBody.classList.add("btn")
+  songsCardBody.classList.add("btn-primary")
+  songsCardBodyButton.id= `get-lyrics-${card_counter}`
+  songsCardBodyButton.addEventListener('click',APIManager.getLyrics(fetchLyricsByTrack))   
+  
+  // Appending all the child elements to their parent containers
+  songsCardBody.appendChild(songsCardBodySongTitle)
+  songsCardBody.appendChild(songsCardBodyButton)
+  
+  songsCardHeader.appendChild(songsCardHeaderArtist)
+  
+  songsCardContainer.appendChild(songsCardHeader)
+  songsCardContainer.appendChild(songsCardBody)
 
-// Adding content to the elements
-songCardHeaderArtist.textContent = `Artist: ${artist}`
-songsCardBodySongTitle.textContent= `Song: ${song}`
-songsCardBodyButton.textContent= "Get Lyrics"
+  songsResultsContainer.appendChild(songsCardContainer)
+}
 
-// Adding styling and classes to the elements
-songCardBody.classList.add("card bg-light")
-songCardBody.style.add("width: 18rem;")
-songCardBody.classList.add("btn btn-primary")
-songsCardBodyButton.id= `get-lyrics-${card_counter}`
-songsCardBodyButton.addEventListener('click',console.log("BUTTON CLICKED"))   // <--------- Dylan, add your fetchLyrics call here
-
-// Appending all the child elements to their parent containers
-songsCardBody.appendChild(songsCardBodySongTitle)
-songsCardBody.appendChild(songsCardBodyButton)
-
-songCardHeader.appendChild(songCardHeaderArtist)
-
-songsCardContainer.appendChild(songCardHeader)
-songsCardContainer.appendChild(songCardBody)
 }else {
   console.log("Lyrics Array")
 }
