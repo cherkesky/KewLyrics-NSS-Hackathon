@@ -3,21 +3,21 @@ const url = "https://api.musixmatch.com/ws/1.1"
 
 APIManager = {
     getArtist(textValue) {
-return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=${apiKey}`)
+return fetchJsonp (`${url}/track.search?format=jsonp&q_lyrics=${textValue}&quorum_factor=1&apikey=4cc92c98b858367876ca9869d3895f76`)
 .then(res => res.json())
 .then(res2 => jsonIterator(res2, "tracks"))
 },
     getLyrics(trackId) {
-    return fetchJsonp (`${url}/track.get?format=jsonp&track_id=${trackId}&apikey=4cc92c98b858367876ca9869d3895f76`)
+    return fetchJsonp (`${url}/track.lyrics.get?format=jsonp&track_id=${trackId}&apikey=4cc92c98b858367876ca9869d3895f76`)
     .then(res => res.json())
     .then(res2 => console.log(res2))
     }
-     
+
 }
 
-//***************************************************************************************************** 
+//*****************************************************************************************************
 // Event Listener for Search Button 
-//***************************************************************************************************** 
+//*****************************************************************************************************
 let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
@@ -29,11 +29,6 @@ const getInputValue = ()=> {
 
 search.addEventListener("click", getInputValue)
 
-APIManager.getLyrics(8515472)
-
-//initializing empty arrays
-trackArray=[]
-lyricsArray=[]
 
 
 //***************************************************************************************************** 
@@ -55,11 +50,11 @@ if (trackOrLyricsJSON==="tracks"){   // we`re processing a response from the "tr
       song: jsonfiedResponse.message.body.track_list[i].track.track_name
     }
     tracksArray.push(tracksObject)
-  }  
+  }
   console.log(tracksArray)
   domPrinter (tracksArray)
 }else{ // we`re processing a response from the "lyrics" endpoint
-  lyricsArray.push(jsonfiedResponse.body.lyrics.lyrics_body)
+  lyricsArray.push(jsonfiedResponse.message.body.lyrics.lyrics_body)
   console.log(lyricsArray)
   return lyricsArray
 }}
