@@ -1,5 +1,8 @@
-const url = "https://api.musixmatch.com/ws/1.1"
 
+//*****************************************************************************************************
+// API calls handler 
+//*****************************************************************************************************
+const url = "https://api.musixmatch.com/ws/1.1"
 
 APIManager = {
   getArtist(textValue) { // getArtist API call
@@ -24,6 +27,9 @@ let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
 const getInputValue = () => {
+  document.querySelector("#songsContainer").innerHTML=`<h3>Search Results: </h3>`
+  document.querySelector("#lyricsContainer").innerHTML=`<h3>Details: </h3>`
+
   let inputValue = document.getElementById("lyricSearch").value;
   if (inputValue === ''){
     alert("Please Enter Lyric")
@@ -54,11 +60,11 @@ jsonIterator = (jsonfiedResponse, trackOrLyricsJSON) => {
       }
       tracksArray.push(tracksObject)
     }
-    console.log(tracksArray)
+    // console.log(tracksArray)
     domPrinter(tracksArray, "Tracks")
   } else { // we`re processing a response from the "lyrics" endpoint
     lyricsArray.push(jsonfiedResponse.message.body.lyrics.lyrics_body)
-    console.log(lyricsArray)
+    // console.log(lyricsArray)
     domPrinter(lyricsArray, "Lyrics")
   }
 }
@@ -71,7 +77,7 @@ let card_counter = 0;
 domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
   if (arrayIdentifier === "Tracks") {  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
     console.log("Tracks Array")
-
+    
     for (let i = 0; i < lyricsOrTracksArray.length; i++) {
       card_counter++
 
@@ -89,8 +95,8 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
 
       //Creating the DOM elements
       let songsResultsContainer = document.querySelector("#songsContainer")
-      let songsCardContainer = document.createElement("div")
 
+      let songsCardContainer = document.createElement("div")
       let songsCardHeader = document.createElement("div")
       let songsCardHeaderArtist = document.createElement("h3")
 
@@ -99,9 +105,12 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       let songsCardBodyButton = document.createElement("button")
 
       // Adding content to the elements
+    
       songsCardHeaderArtist.textContent = `${byTrackArtist}`
       songsCardBodySongTitle.textContent = `${byTrackSong}`
       songsCardBodyButton.textContent = "Get Lyrics"
+      lyricsArray = [] // clearing the last result
+      tracksArray=[] // clearing the last result
 
       // Adding styling and classes to the elements
       songsCardHeader.classList.add("card-header")
@@ -112,7 +121,13 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       songsCardBodyButton.classList.add("btn")
       songsCardBodyButton.classList.add("btn-primary")
       songsCardBodyButton.id = `get-lyrics-${card_counter}`
-      songsCardBodyButton.addEventListener('click', getMyLyrics)
+
+      // event listeners to the 'get lyrics' button
+      songsCardBodyButton.addEventListener("click", function (){
+       let lyricsContainerChecker = document.querySelector("#lyricsContainer")
+           lyricsContainerChecker.innerHTML=`<h3>Details: </h3>`
+        getMyLyrics(fetchLyricsByTrack)
+      })
 
       // Appending all the child elements to their parent containers
       songsCardBody.appendChild(songsCardBodySongTitle)
@@ -125,8 +140,6 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
 
   } else {
     console.log("Lyrics Array")
-
-for (let i=0; i<lyricsOrTracksArray.length; i++){
   //Creating the DOM elements
   let lyricsResultsContainer = document.querySelector("#lyricsContainer")
 
@@ -140,9 +153,11 @@ for (let i=0; i<lyricsOrTracksArray.length; i++){
   let lyricsCardBodySongLyrics = document.createElement("pre")
 
   // Adding content to the elements
-  lyricsCardHeaderSongTitle.textContent = `Title`   // <-------- add code here
-  lyricsCardBodySongLyrics.textContent = `La la la la`    // <-------- add code here
-
+  lyricsArray = [] // clearing the last result
+  lyricsCardHeaderSongTitle.textContent = `Sing it!`   // <-------- add code here maybe?
+  lyricsCardBodySongLyrics.textContent = `${lyricsOrTracksArray}`  
+  console.log(lyricsOrTracksArray)
+  
   // Adding styling and classes to the elements
   lyricsCardContainer.classList.add("card")
   lyricsCardContainer.classList.add("bg-light")
@@ -160,17 +175,4 @@ for (let i=0; i<lyricsOrTracksArray.length; i++){
   lyricsCardContainer.appendChild(lyricsCardBody)
 
   lyricsResultsContainer.appendChild(lyricsCardContainer)
-
-
-
-
-
-
-
-}
-
-
-
-
-  }
-}
+}}
