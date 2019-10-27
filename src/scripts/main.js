@@ -32,8 +32,8 @@ let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
 const getInputValue = () => {
-  document.querySelector("#songsContainer").innerHTML=`<h3>Search Results: </h3>`
-  document.querySelector("#lyricsContainer").innerHTML=`<h3>Details: </h3>`
+  document.querySelector("#songsContainer").innerHTML = `<h3>Search Results: </h3>`
+  document.querySelector("#lyricsContainer").innerHTML = `<h3>Details: </h3>`
 
   let inputValue = document.getElementById("lyricSearch").value;
   APIManager.getArtist(inputValue);
@@ -80,7 +80,7 @@ let card_counter = 0;
 domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
   if (arrayIdentifier === "Tracks") {  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
     console.log("Tracks Array")
-    
+
     for (let i = 0; i < lyricsOrTracksArray.length; i++) {
       card_counter++
 
@@ -101,12 +101,12 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       let songsCardBodyButton = document.createElement("button")
 
       // Adding content to the elements
-    
+
       songsCardHeaderArtist.textContent = `${byTrackArtist}`
       songsCardBodySongTitle.textContent = `${byTrackSong}`
       songsCardBodyButton.textContent = "Get Lyrics"
       lyricsArray = [] // clearing the last result
-      tracksArray=[] // clearing the last result
+      tracksArray = [] // clearing the last result
 
       // Adding styling and classes to the elements
       songsCardHeader.classList.add("card-header")
@@ -119,9 +119,9 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       songsCardBodyButton.id = `get-lyrics-${card_counter}`
 
       // event listeners to the 'get lyrics' button
-      songsCardBodyButton.addEventListener("click", function (){
-       let lyricsContainerChecker = document.querySelector("#lyricsContainer")
-           lyricsContainerChecker.innerHTML=`<h3>Details: </h3>`
+      songsCardBodyButton.addEventListener("click", function () {
+        let lyricsContainerChecker = document.querySelector("#lyricsContainer")
+        lyricsContainerChecker.innerHTML = `<h3>Details: </h3>`
         getMyLyrics(fetchLyricsByTrack)
       })
 
@@ -136,39 +136,71 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
 
   } else {
     console.log("Lyrics Array")
-  //Creating the DOM elements
-  let lyricsResultsContainer = document.querySelector("#lyricsContainer")
+    //Creating the DOM elements
+    let lyricsResultsContainer = document.querySelector("#lyricsContainer")
 
-  let lyricsCardContainer = document.createElement("div")
+    let lyricsCardContainer = document.createElement("div")
 
-  let lyricsCardHeader = document.createElement("div")
-  let lyricsCardHeaderSongTitle = document.createElement("h3")
+    let lyricsCardHeader = document.createElement("div")
+    let lyricsCardHeaderSongTitle = document.createElement("h3")
 
-  let lyricsCardBody = document.createElement("div")
-  let lyricsCardBodySongContainer = document.createElement("p")
-  let lyricsCardBodySongLyrics = document.createElement("pre")
+    let lyricsCardBody = document.createElement("div")
+    let lyricsCardBodySongContainer = document.createElement("p")
+    let lyricsCardBodySongLyrics = document.createElement("pre")
+    let lyricsCardBodySongsLyricsButton = document.createElement("button")
 
-  // Adding content to the elements
-  lyricsArray = [] // clearing the last result
-  lyricsCardHeaderSongTitle.textContent = `Sing it!`   // <-------- add code here maybe?
-  lyricsCardBodySongLyrics.textContent = `${lyricsOrTracksArray}`  
-  console.log(lyricsOrTracksArray)
-  
-  // Adding styling and classes to the elements
-  lyricsCardContainer.classList.add("card")
-  lyricsCardContainer.classList.add("bg-light")
-  lyricsCardContainer.style.cssText = `width: 18rem;`
-  
-  lyricsCardHeader.classList.add("card-header")
-  lyricsCardBody.classList.add("card-body")
+    // Adding content to the elements
+    lyricsArray = [] // clearing the last result
+    lyricsCardHeaderSongTitle.textContent = `Sing it!`   // <-------- add code here maybe?
+    lyricsCardBodySongLyrics.textContent = `${lyricsOrTracksArray}`
+    lyricsCardBodySongsLyricsButton.textContent = `Print Lyrics`
+    console.log(lyricsOrTracksArray)
 
-  // Appending all the child elements to their parent containers
-  lyricsCardHeader.appendChild(lyricsCardHeaderSongTitle)
-  lyricsCardBodySongContainer.appendChild(lyricsCardBodySongLyrics)
-  lyricsCardBody.appendChild(lyricsCardBodySongContainer)
+    // Adding styling and classes to the elements
+    lyricsCardContainer.classList.add("card")
+    lyricsCardContainer.classList.add("bg-light")
+    lyricsCardContainer.style.cssText = `width: 18rem;`
+    lyricsCardBodySongsLyricsButton.classList.add("btn")
+    lyricsCardBodySongsLyricsButton.classList.add("btn-primary")
+    lyricsCardHeader.classList.add("card-header")
+    lyricsCardBody.classList.add("card-body")
 
-  lyricsCardContainer.appendChild(lyricsCardHeader)
-  lyricsCardContainer.appendChild(lyricsCardBody)
+    // event listeners to the 'get lyrics' button
+    lyricsCardBodySongsLyricsButton.addEventListener("click", function () {
+      lyricsPrinter(lyricsResultsContainer.value);
+    })
 
-  lyricsResultsContainer.appendChild(lyricsCardContainer)
-}}
+
+    // Appending all the child elements to their parent containers
+    lyricsCardHeader.appendChild(lyricsCardHeaderSongTitle)
+    lyricsCardBodySongContainer.appendChild(lyricsCardBodySongLyrics)
+    lyricsCardBody.appendChild(lyricsCardBodySongContainer)
+    lyricsCardBody.appendChild(lyricsCardBodySongsLyricsButton)
+
+    lyricsCardContainer.appendChild(lyricsCardHeader)
+    lyricsCardContainer.appendChild(lyricsCardBody)
+
+    lyricsResultsContainer.appendChild(lyricsCardContainer)
+  }
+}
+
+const lyricsPrinter=()=>{
+
+let mywindow = window.open('', 'PRINT', 'height=400,width=600');
+
+  mywindow.document.write('<html><head><title>' + document.title  + '</title>');
+  mywindow.document.write('</head><body >');
+  mywindow.document.write('<h1>' + document.title  + '</h1>');
+  mywindow.document.write(document.getElementById("lyricsContainer").innerHTML);
+  mywindow.document.write('</body></html>');
+
+  // mywindow.document.close(); // necessary for IE >= 10
+  // mywindow.focus(); // necessary for IE >= 10*/
+
+  mywindow.print();
+  mywindow.close();
+
+
+
+
+}
