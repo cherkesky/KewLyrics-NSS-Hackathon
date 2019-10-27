@@ -1,4 +1,5 @@
 .wrapper {
+  opacity: 0.9;
   display: flex;
   flex-flow: row wrap;
   font-weight: bold;
@@ -20,15 +21,22 @@ main {
 
 .card {
   margin-top: .5em;
+  opacity: 200%%;
+
 }
 
 section {
   text-align: left;
+  opacity: 100%;
+
   /* width: 100%; */
 
 }
 
 
 body {
+  background-image: url(/styles/bg.jpg); 
+  background-size: 100%;
+  background-repeat: no-repeat;
   padding: 2em;
 }
