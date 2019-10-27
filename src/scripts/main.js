@@ -93,11 +93,14 @@ for (let i=0; i<lyricsOrTracksArray.length; i++){
   songsCardBodyButton.textContent= "Get Lyrics"
   
   // Adding styling and classes to the elements
-  songsCardBody.classList.add("card")
-  songsCardBody.classList.add("bg-light")
-  songsCardBody.style.cssText = `width: 18rem;`
-  songsCardBody.classList.add("btn")
-  songsCardBody.classList.add("btn-primary")
+  songsCardHeader.classList.add("card-header")
+  songsCardBody.classList.add("card-body")
+  songsCardContainer.classList.add("card")
+  songsCardContainer.classList.add("bg-light")
+  songsCardContainer.classList.add("bg-light")
+  songsCardContainer.style.cssText = `width: 18rem;`
+  songsCardBodyButton.classList.add("btn")
+  songsCardBodyButton.classList.add("btn-primary")
   songsCardBodyButton.id= `get-lyrics-${card_counter}`
   songsCardBodyButton.addEventListener('click',APIManager.getLyrics(fetchLyricsByTrack))   
   
