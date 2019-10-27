@@ -10,32 +10,29 @@ APIManager = {
   getLyrics(trackId) {  // getLyrics API call
     return fetchJsonp(`${url}/track.lyrics.get?format=jsonp&track_id=${trackId}&apikey=4cc92c98b858367876ca9869d3895f76`)
       .then(res => res.json())
-      .then(res2 => jsonIterator(res2, "lyrics"))
+      .then(res2 => jsonIterator(res2 ))
   }
 
 }
 
-const getMyLyrics = (getMyLyricsByTrackID) => {
-
-  APIManager.getLyrics(getMyLyricsByTrackID);
-  console.log("Track from getMyLyrics:", getMyLyricsByTrackID)
-}
 
 
 //*****************************************************************************************************
-// Event Listener for Search Button 
+// Event Listener for Search Button
 //*****************************************************************************************************
 let search = document.getElementById("btnSearch");
 let inputValue = document.getElementById("lyricSearch").value;
 
 const getInputValue = () => {
   let inputValue = document.getElementById("lyricSearch").value;
+  if (inputValue === ''){
+    alert("Please Enter Lyric")
+  } else {
   APIManager.getArtist(inputValue);
-
+}
 };
 
 search.addEventListener("click", getInputValue)
-
 
 //***************************************************************************************************** 
 // a helper function that iterates through the json response and return the relavant items as an array
@@ -83,6 +80,13 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       const byTrackArtist = lyricsOrTracksArray[i].artist
       const byTrackSong = lyricsOrTracksArray[i].song
 
+
+      const getMyLyrics = () => {
+        let getMyLyricsByTrackID = fetchLyricsByTrack
+         APIManager.getLyrics(getMyLyricsByTrackID);
+      }
+      
+
       //Creating the DOM elements
       let songsResultsContainer = document.querySelector("#songsContainer")
       let songsCardContainer = document.createElement("div")
@@ -108,7 +112,7 @@ domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
       songsCardBodyButton.classList.add("btn")
       songsCardBodyButton.classList.add("btn-primary")
       songsCardBodyButton.id = `get-lyrics-${card_counter}`
-      songsCardBodyButton.addEventListener('click', getMyLyrics(fetchLyricsByTrack))
+      songsCardBodyButton.addEventListener('click', getMyLyrics)
 
       // Appending all the child elements to their parent containers
       songsCardBody.appendChild(songsCardBodySongTitle)
@@ -167,6 +171,6 @@ for (let i=0; i<lyricsOrTracksArray.length; i++){
 
 
 
-    
+
   }
 }
