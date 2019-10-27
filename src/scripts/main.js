@@ -1,6 +1,6 @@
 
 //*****************************************************************************************************
-// API calls handler 
+// API calls handler
 //*****************************************************************************************************
 const url = "https://api.musixmatch.com/ws/1.1"
 
@@ -50,7 +50,6 @@ let tracksArray = []
 
 
 jsonIterator = (jsonfiedResponse, trackOrLyricsJSON) => {
-  console.log(jsonfiedResponse)
   if (trackOrLyricsJSON === "tracks") {   // we`re processing a response from the "tracks" endpoint
     for (let i = 0; i < jsonfiedResponse.message.body.track_list.length; i++) {
       const tracksObject = {
@@ -60,11 +59,9 @@ jsonIterator = (jsonfiedResponse, trackOrLyricsJSON) => {
       }
       tracksArray.push(tracksObject)
     }
-    // console.log(tracksArray)
     domPrinter(tracksArray, "Tracks")
   } else { // we`re processing a response from the "lyrics" endpoint
     lyricsArray.push(jsonfiedResponse.message.body.lyrics.lyrics_body)
-    // console.log(lyricsArray)
     domPrinter(lyricsArray, "Lyrics")
   }
 }
@@ -76,13 +73,11 @@ let card_counter = 0;
 
 domPrinter = (lyricsOrTracksArray, arrayIdentifier) => {
   if (arrayIdentifier === "Tracks") {  // checking what kind of array has passed through knowing that only the tracks array has the tracks property
-    console.log("Tracks Array")
 
     for (let i = 0; i < lyricsOrTracksArray.length; i++) {
       card_counter++
 
       const fetchLyricsByTrack = lyricsOrTracksArray[i].track
-      console.log(fetchLyricsByTrack)
       const byTrackArtist = lyricsOrTracksArray[i].artist
       const byTrackSong = lyricsOrTracksArray[i].song
 
