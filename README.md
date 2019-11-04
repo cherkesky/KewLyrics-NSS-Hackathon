@@ -3,4 +3,4 @@
 10/26-27 2019 NSS Hack-O-Ween hackathon
 
 
-![] Video MP4 (1438x742).mp4
+![](Video MP4 (1438x742).mp4)
