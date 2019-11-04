@@ -4,7 +4,7 @@
 <br>
 
 
-![Screencast](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Screencast](KewlGif.gif)
 
 
 ## Features
